@@ -80,7 +80,7 @@ gcloud container clusters get-credentials voting-cluster --region us-central1
 
 ### 🧩 3. Deploy the Application
 Create Namespace
-kubectl apply -f k8s-manifests/namespace.yaml
+
 
 Apply Kubernetes Manifests
 kubectl apply -f k8s-manifests/
@@ -108,7 +108,7 @@ Result app → http://localhost:8081
 
 After confirming your services run correctly, apply the ingress configuration:
 
-kubectl apply -f k8s-manifests/ingress.yaml
+kubectl apply -f k8s-specifications/ingress.yaml
 
 
 Get the external IP:
@@ -118,42 +118,42 @@ kubectl get ingress -n voting-app
 
 Access your app using the Ingress external IP or custom domain.
 
-📸 Screenshots
+## 📸 Screenshots
 Vote App	Result App
 
 	
 
 (Replace with your actual screenshots — optimized for web display.)
 
-💡 Lessons Learned
+## 💡 Lessons Learned
 
-How to create and connect to a GKE cluster
+- How to create and connect to a GKE cluster
 
-The difference between Docker Compose networking and Kubernetes Service discovery
+- The difference between Docker Compose networking and Kubernetes Service discovery
 
-Steps to expose applications externally using Ingress
+- Steps to expose applications externally using Ingress
 
-Importance of testing locally before deploying to the cloud
+- Importance of testing locally before deploying to the cloud
 
-Understanding namespace isolation and service communication
+- Understanding namespace isolation and service communication
 
-🧰 Future Enhancements
+## 🧰 Future Enhancements
 
-Add CI/CD pipeline using Jenkins or GitHub Actions
+- Add CI/CD pipeline using Jenkins or GitHub Actions
 
-Implement Prometheus + Grafana monitoring
+- Implement Prometheus + Grafana monitoring
 
-Deploy via Helm chart for easier versioning and configuration
+- Deploy via Helm chart for easier versioning and configuration
 
-Integrate Datadog or New Relic for advanced observability
+- Integrate Datadog or New Relic for advanced observability
 
-👩🏽‍💻 Author
 
-Maryam Abdulrauf
-Junior DevOps Engineer | Cloud & Automation Enthusiast
+## 👩🏽‍💻 Author
 
-📧 [Your Email or LinkedIn Profile Here]
-🌐 [Your Portfolio or GitHub Profile]
+**Maryam Abdulrauf**
+*Junior DevOps Engineer | Cloud & Automation Enthusiast*
+
+📧 [abdulraufmaryam15@gmail.com]
 
 🏷️ License
 
