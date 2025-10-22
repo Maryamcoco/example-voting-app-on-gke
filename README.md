@@ -117,10 +117,14 @@ kubectl get ingress -n voting-app
 
 
 Access your app using the Ingress external IP or custom domain.
+## GIF
+![GIF](https://github.com/Maryamcoco/example-voting-app-on-gke/blob/main/voting%20gif.gif)
 
 ## 📸 Screenshots
-Vote App	Result App
+![Vote App](https://github.com/Maryamcoco/example-voting-app-on-gke/blob/main/Screenshot%202025-10-22%20161428.png)
 
+Result App
+![Result App](
 	
 
 (Replace with your actual screenshots — optimized for web display.)
