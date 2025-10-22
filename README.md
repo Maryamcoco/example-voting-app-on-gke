@@ -1,65 +1,162 @@
-# Example Voting App
+# 🗳️ Example Voting App on GKE
 
-A simple distributed application running across multiple Docker containers.
+This project demonstrates the deployment of the **Example Voting App** on **Google Kubernetes Engine (GKE)** using **Docker**, **Kubernetes manifests**, and **Ingress** for external access.  
 
-## Getting started
+The application is a microservices-based voting system that allows users to vote between two options (e.g., Cats 🐱 vs Dogs 🐶) and view real-time results.  
+It was originally created by Docker and adapted here to showcase DevOps and Kubernetes deployment skills — from local testing to cloud-based orchestration.
 
-Download [Docker Desktop](https://www.docker.com/products/docker-desktop) for Mac or Windows. [Docker Compose](https://docs.docker.com/compose) will be automatically installed. On Linux, make sure you have the latest version of [Compose](https://docs.docker.com/compose/install/).
+---
 
-This solution uses Python, Node.js, .NET, with Redis for messaging and Postgres for storage.
+## 📝 Project Description
 
-Run in this directory to build and run the app:
+This project highlights:
+- Containerization and local testing with **Docker Compose**
+- **Cluster creation** and deployment on **Google Kubernetes Engine (GKE)**
+- Use of **Kubernetes manifests** for defining Deployments, Services, and Ingress
+- Exposure of applications via **Ingress Controller**
+- Port-forward testing and namespace isolation
 
-```shell
-docker compose up
+It demonstrates practical DevOps workflow for running a multi-service app on Kubernetes using Google Cloud infrastructure.
+
+---
+
+## 🧩 Project Structure
+
+├── docker-compose.yml # Local setup for testing all services together
+├── k8s-specifications/
+│ ├── namespace.yaml
+│ ├── vote-deployment.yaml
+│ ├── vote-service.yaml
+│ ├── result-deployment.yaml
+│ ├── result-service.yaml
+│ ├── redis-deployment.yaml
+│ ├── postgres-deployment.yaml
+│ ├── worker-deployment.yaml
+│ └── ingress.yaml
+└── README.md
+
+
+---
+
+## ⚙️ Technologies Used
+
+- **Docker** – Containerization  
+- **Docker Compose** – Local testing and service linking  
+- **Kubernetes (kubectl)** – Deployment and cluster management  
+- **Google Kubernetes Engine (GKE)** – Managed Kubernetes cluster  
+- **Ingress Controller** – External routing and load balancing  
+- **Redis & Postgres** – Data storage for votes and results  
+
+---
+
+## 🚀 Deployment Workflow
+
+### 🧱 1. Local Testing with Docker Compose
+
+Run all services locally to confirm functionality:
+
+```bash
+docker compose up -d
 ```
+Then open:
 
-The `vote` app will be running at [http://localhost:8080](http://localhost:8080), and the `results` will be at [http://localhost:8081](http://localhost:8081).
+Vote app → http://localhost:8080
 
-Alternately, if you want to run it on a [Docker Swarm](https://docs.docker.com/engine/swarm/), first make sure you have a swarm. If you don't, run:
+Result app → http://localhost:8081
 
-```shell
-docker swarm init
-```
+### ☁️ 2. Create a GKE Cluster
 
-Once you have your swarm, in this directory run:
+Provision your Kubernetes cluster on Google Cloud:
 
-```shell
-docker stack deploy --compose-file docker-stack.yml vote
-```
+gcloud container clusters create voting-cluster \
+  --region us-central1 \
+  --num-nodes 1 \
+  --machine-type e2-standard-4
 
-## Run the app in Kubernetes
 
-The folder k8s-specifications contains the YAML specifications of the Voting App's services.
+Connect your terminal to the cluster:
 
-Run the following command to create the deployments and services. Note it will create these resources in your current namespace (`default` if you haven't changed it.)
+gcloud container clusters get-credentials voting-cluster --region us-central1
 
-```shell
-kubectl create -f k8s-specifications/
-```
+### 🧩 3. Deploy the Application
+Create Namespace
+kubectl apply -f k8s-manifests/namespace.yaml
 
-The `vote` web app is then available on port 31000 on each host of the cluster, the `result` web app is available on port 31001.
+Apply Kubernetes Manifests
+kubectl apply -f k8s-manifests/
 
-To remove them, run:
 
-```shell
-kubectl delete -f k8s-specifications/
-```
+Check if pods are running:
 
-## Architecture
+kubectl get pods -n voting-app
 
-![Architecture diagram](architecture.excalidraw.png)
+🔁 4. Test via Port Forwarding
 
-* A front-end web app in [Python](/vote) which lets you vote between two options
-* A [Redis](https://hub.docker.com/_/redis/) which collects new votes
-* A [.NET](/worker/) worker which consumes votes and stores them in…
-* A [Postgres](https://hub.docker.com/_/postgres/) database backed by a Docker volume
-* A [Node.js](/result) web app which shows the results of the voting in real time
+Before setting up ingress, you can access the app locally using port forwarding:
 
-## Notes
+kubectl port-forward svc/vote 8080:80 -n voting-app
+kubectl port-forward svc/result 8081:80 -n voting-app
 
-The voting application only accepts one vote per client browser. It does not register additional votes if a vote has already been submitted from a client.
 
-This isn't an example of a properly architected perfectly designed distributed app... it's just a simple
-example of the various types of pieces and languages you might see (queues, persistent data, etc), and how to
-deal with them in Docker at a basic level.
+Access locally:
+
+Vote app → http://localhost:8080
+
+Result app → http://localhost:8081
+
+🌐 5. Expose via Ingress
+
+After confirming your services run correctly, apply the ingress configuration:
+
+kubectl apply -f k8s-manifests/ingress.yaml
+
+
+Get the external IP:
+
+kubectl get ingress -n voting-app
+
+
+Access your app using the Ingress external IP or custom domain.
+
+📸 Screenshots
+Vote App	Result App
+
+	
+
+(Replace with your actual screenshots — optimized for web display.)
+
+💡 Lessons Learned
+
+How to create and connect to a GKE cluster
+
+The difference between Docker Compose networking and Kubernetes Service discovery
+
+Steps to expose applications externally using Ingress
+
+Importance of testing locally before deploying to the cloud
+
+Understanding namespace isolation and service communication
+
+🧰 Future Enhancements
+
+Add CI/CD pipeline using Jenkins or GitHub Actions
+
+Implement Prometheus + Grafana monitoring
+
+Deploy via Helm chart for easier versioning and configuration
+
+Integrate Datadog or New Relic for advanced observability
+
+👩🏽‍💻 Author
+
+Maryam Abdulrauf
+Junior DevOps Engineer | Cloud & Automation Enthusiast
+
+📧 [Your Email or LinkedIn Profile Here]
+🌐 [Your Portfolio or GitHub Profile]
+
+🏷️ License
+
+This project is licensed under the MIT License
+
+
