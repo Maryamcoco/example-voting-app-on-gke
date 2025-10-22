@@ -121,13 +121,12 @@ Access your app using the Ingress external IP or custom domain.
 ![GIF](https://github.com/Maryamcoco/example-voting-app-on-gke/blob/main/voting%20gif.gif)
 
 ## 📸 Screenshots
+![vote loadbalancer](https://github.com/Maryamcoco/example-voting-app-on-gke/blob/main/Screenshot%202025-10-22%20162258.png)
 ![Vote App](https://github.com/Maryamcoco/example-voting-app-on-gke/blob/main/Screenshot%202025-10-22%20161428.png)
 
 Result App
-![Result App](
+![Result App](https://github.com/Maryamcoco/example-voting-app-on-gke/blob/main/Screenshot%202025-10-22%20154203.png)
 	
-
-(Replace with your actual screenshots — optimized for web display.)
 
 ## 💡 Lessons Learned
 
